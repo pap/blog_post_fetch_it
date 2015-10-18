@@ -1,10 +1,7 @@
-#\ -p 8888
+# -p 8888
 
-require 'bundler/setup'
-require 'praxis'
+ENV['RACK_ENV'] ||= 'development'
+Bundler.setup(:default, ENV['RACK_ENV'])
+Bundler.require(:default, ENV['RACK_ENV'])
 
-application = Praxis::Application.instance
-application.logger = Logger.new(STDOUT)
-application.setup
-
-run application
+run Praxis::Application.instance.setup
