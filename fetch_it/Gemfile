@@ -9,6 +9,8 @@ gem 'rake'
 gem 'pry'
 gem 'pry-byebug'
 
+gem 'sidekiq', '~> 3.5.1'
+
 group :development, :test do
   gem "rack-test", :require => "rack/test"
   gem "rspec" # needed for rake task

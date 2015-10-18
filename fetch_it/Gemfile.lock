@@ -1,0 +1,198 @@
+GIT
+  remote: git://github.com/rightscale/attributor.git
+  revision: e2e196fc479fb6ad88d54e5ba7ca8412ed54f9fc
+  specs:
+    attributor (4.0.1)
+      activesupport (>= 3)
+      hashie (~> 3)
+      randexp (~> 0)
+
+GIT
+  remote: git://github.com/rightscale/praxis-blueprints.git
+  revision: 2149f8d5961ad81c40b5237e148758c1ba8095a9
+  specs:
+    praxis-blueprints (2.2)
+      activesupport (>= 3)
+      attributor (>= 4.0.1)
+      randexp (~> 0)
+
+GIT
+  remote: git://github.com/rightscale/praxis.git
+  revision: 8ca419808bd6f426e763a2cf0285b46932617141
+  specs:
+    praxis (0.18.1)
+      activesupport (>= 3)
+      attributor (>= 4.0.1)
+      harness (~> 2)
+      mime (~> 0)
+      mustermann (~> 0)
+      praxis-blueprints (>= 2.2)
+      praxis-mapper (>= 4.1)
+      rack (~> 1)
+      terminal-table (~> 1.4)
+      thor (~> 0.18)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.4)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    byebug (5.0.0)
+      columnize (= 0.9.0)
+    celluloid (0.17.2)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.5)
+      timers (>= 4.1.1)
+    coderay (1.1.0)
+    columnize (0.9.0)
+    connection_pool (2.2.0)
+    diff-lcs (1.2.5)
+    ffi (1.9.10)
+    foreman (0.78.0)
+      thor (~> 0.19.1)
+    formatador (0.2.5)
+    guard (2.13.0)
+      formatador (>= 0.2.4)
+      listen (>= 2.7, <= 4.0)
+      lumberjack (~> 1.0)
+      nenv (~> 0.1)
+      notiffany (~> 0.0)
+      pry (>= 0.9.12)
+      shellany (~> 0.0)
+      thor (>= 0.18.1)
+    guard-compat (1.2.1)
+    guard-rspec (4.6.4)
+      guard (~> 2.1)
+      guard-compat (~> 1.1)
+      rspec (>= 2.99.0, < 4.0)
+    harness (2.0.0)
+      statsd-ruby
+    hashie (3.4.2)
+    hitimes (1.2.3)
+    i18n (0.7.0)
+    json (1.8.3)
+    kgio (2.10.0)
+    listen (3.0.3)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+    lumberjack (1.0.9)
+    method_source (0.8.2)
+    mime (0.4.2)
+    minitest (5.8.1)
+    mustermann (0.4.0)
+      tool (~> 0.2)
+    nenv (0.2.0)
+    notiffany (0.0.8)
+      nenv (~> 0.1)
+      shellany (~> 0.0)
+    praxis-mapper (4.1.2)
+      activesupport (>= 3)
+      randexp (~> 0)
+      sequel (~> 4)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (3.2.0)
+      byebug (~> 5.0)
+      pry (~> 0.10)
+    rack (1.6.4)
+    rack-test (0.6.3)
+      rack (>= 1.0)
+    rainbows (4.6.2)
+      kgio (~> 2.5)
+      rack (~> 1.1)
+      unicorn (~> 4.8)
+    raindrops (0.15.0)
+    rake (10.4.2)
+    randexp (0.1.7)
+    rb-fsevent (0.9.6)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    redis (3.2.1)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-collection_matchers (1.1.2)
+      rspec-expectations (>= 2.99.0.beta1)
+    rspec-core (3.3.2)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
+    rspec-mocks (3.3.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+    sequel (4.27.0)
+    shellany (0.0.1)
+    shotgun (0.9.1)
+      rack (>= 1.0)
+    sidekiq (3.5.1)
+      celluloid (~> 0.17.2)
+      connection_pool (~> 2.2, >= 2.2.0)
+      json (~> 1.0)
+      redis (~> 3.2, >= 3.2.1)
+      redis-namespace (~> 1.5, >= 1.5.2)
+    slop (3.6.0)
+    statsd-ruby (1.2.1)
+    terminal-table (1.5.2)
+    thor (0.19.1)
+    thread_safe (0.3.5)
+    timers (4.1.1)
+      hitimes
+    tool (0.2.3)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    unicorn (4.9.0)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  attributor!
+  foreman
+  guard
+  guard-rspec
+  jruby-openssl
+  praxis!
+  praxis-blueprints!
+  pry
+  pry-byebug
+  rack-test
+  rainbows
+  rake
+  rspec
+  rspec-collection_matchers
+  rspec-its
+  shotgun
+  sidekiq (~> 3.5.1)
+
+BUNDLED WITH
+   1.10.6
