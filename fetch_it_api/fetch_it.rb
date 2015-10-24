@@ -9,9 +9,18 @@ end
 namespace "/api" do
   namespace "/v1" do
     post "/twitter" do
-      puts "POST twitter"
-      # Enqueue the fetch tweets worker with number and search term
-      # respond with uuid
+      params = JSON.parse(request.body.read)
+
+      data = {
+        "uuid" => SecureRandom.uuid,
+        "search_string" => params["search"],
+        "number_of_tweets" => params["number"],
+        "requested_at" => Time.now
+      }
+
+      $redis.publish("workers", data.to_json)
+
+      json data
     end
 
     get "/twitter" do

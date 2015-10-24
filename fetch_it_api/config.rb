@@ -1,7 +1,9 @@
 require 'redis'
-require 'resque'
 require 'sinatra/namespace'
+require 'json'
 require 'sinatra/json'
 
-Resque.redis =  "redis:6379"
+configure do
+  $redis = Redis.new
+end
 

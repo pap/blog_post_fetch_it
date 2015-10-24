@@ -2,7 +2,5 @@ source 'http://rubygems.org'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
-
-gem 'resque'
-#gem 'redis'
-#gem 'sidekiq'
+gem 'redis'
+gem 'json'
