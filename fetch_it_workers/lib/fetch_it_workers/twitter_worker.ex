@@ -21,7 +21,7 @@ defmodule FetchItWorkers.TwitterWorker do
 
   defp map_tweet(tweet) do
     case tweet.entities.urls do
-      [h | t] ->
+      [_ | _] ->
         [%{expanded_url: url}| _] = tweet.entities.urls
         url
       _ -> nil

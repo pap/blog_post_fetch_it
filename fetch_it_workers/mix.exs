@@ -22,7 +22,8 @@ defmodule FetchItWorkers.Mixfile do
     [
       {:oauth, github: "tim/erlang-oauth"},
       {:extwitter, "~> 0.5.1"},
-      {:poison, "~> 1.5"}
+      {:poison, "~> 1.5"},
+      {:redix, "~> 0.2.0"}
     ]
   end
 end
