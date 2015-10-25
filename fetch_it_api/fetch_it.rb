@@ -26,8 +26,7 @@ namespace "/api" do
     get "/twitter/:uuid" do
       puts params
       tweets = $redis.get(params[:uuid])
-      # TODO: ensure encoding as json instead of a tring
-      json tweets
+      json JSON.parse(tweets)
     end
   end
 end

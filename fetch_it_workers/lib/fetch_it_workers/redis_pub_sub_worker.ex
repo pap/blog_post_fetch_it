@@ -8,7 +8,8 @@ defmodule FetchItWorkers.RedisPubSubWorker do
   end
 
   def init(_args) do
-    # returning a quick timeout will allow the subscribe to happen on ...
+    # returning a quick timeout will allow the subscribe to happen on
+    # handle_info(:timeout, state)
     {:ok, %{pub_sub_con: nil}, 50}
   end
 
