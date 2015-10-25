@@ -23,10 +23,11 @@ namespace "/api" do
       json data
     end
 
-    get "/twitter" do
-      puts "GET twitter"
-      # Get the tweets saved with uuid
-      # store them as a file for now ;)
+    get "/twitter/:uuid" do
+      puts params
+      tweets = $redis.get(params[:uuid])
+      # TODO: ensure encoding as json instead of a tring
+      json tweets
     end
   end
 end

@@ -4,7 +4,7 @@ defmodule FetchItWorkers.RedisPubSubWorker do
   @redis_sub_channel "workers"
 
   def start_link do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+    GenServer.start_link(__MODULE__, [], name: :redis_pub_sub)
   end
 
   def init(_args) do
@@ -26,10 +26,11 @@ defmodule FetchItWorkers.RedisPubSubWorker do
   end
 
   def handle_info({:redix_pubsub, :message, message, _channel}, state) do
-    IO.puts("Received a message ...")
-    message |> inspect |> IO.puts
-    # TODO: fetch tweets ...
-    # save tweets ... possibly on redis
+    {:ok, decoded} = Poison.decode(message)
+
+    tweets = FetchItWorkers.TwitterWorker.fetch_tweets(:twitter_worker, decoded["search"], decoded["number"])
+    FetchItWorkers.RedisStoreWorker.store(:redis_store, decoded["uuid"], tweets)
+
     {:noreply, state}
   end
 end
