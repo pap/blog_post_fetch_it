@@ -28,9 +28,8 @@ defmodule FetchItWorkers.RedisPubSubWorker do
 
   def handle_info({:redix_pubsub, :message, message, _channel}, state) do
     {:ok, decoded} = Poison.decode(message)
-
-    tweets = FetchItWorkers.TwitterWorker.fetch_tweets(:twitter_worker, decoded["search"], decoded["number"])
-    FetchItWorkers.RedisStoreWorker.store(:redis_store, decoded["uuid"], tweets)
+    tweets = FetchItWorkers.TwitterWorker.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
+    FetchItWorkers.RedisStoreWorker.store!(:redis_store, decoded["uuid"], tweets)
 
     {:noreply, state}
   end
