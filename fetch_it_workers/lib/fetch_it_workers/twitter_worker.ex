@@ -4,7 +4,7 @@ defmodule FetchItWorkers.TwitterWorker do
   @number_of_tweets 20
 
   def start_link do
-    GenServer.start_link(__MODULE__, [], name: :twitter_worker)
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def fetch_tweets(pid, search_string, number_of_tweets \\ @number_of_tweets) do

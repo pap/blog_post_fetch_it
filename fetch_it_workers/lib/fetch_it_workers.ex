@@ -6,6 +6,7 @@ defmodule FetchItWorkers do
 
     children = [
       worker(FetchItWorkers.RedisPubSubWorker, []),
+      worker(FetchItWorkers.RedisStoreWorker, []),
       worker(FetchItWorkers.TwitterWorker, [])
     ]
 
