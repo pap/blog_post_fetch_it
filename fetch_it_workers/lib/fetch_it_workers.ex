@@ -5,6 +5,7 @@ defmodule FetchItWorkers do
     import Supervisor.Spec, warn: false
 
     children = [
+      worker(FetchItWorkers.RedisPubSubWorker, []),
       worker(FetchItWorkers.TwitterWorker, [])
     ]
 
