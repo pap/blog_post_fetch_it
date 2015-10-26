@@ -37,6 +37,7 @@ defmodule FetchItWorkers.RedisStoreWorker do
 
   defp redis_set(conn, uuid, message) do
     # TODO: store as json
-    Redix.command(conn, ~w(SET #{uuid} #{message}))
+    # TODO: check rpush for json storing
+    Redix.command(conn, ~w(RPUSH #{uuid} #{message}))
   end
 end

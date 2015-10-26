@@ -26,7 +26,9 @@ namespace "/api" do
     get "/twitter/:uuid" do
       # TODO: read json ... hash commands?
       tweets = $redis.get(params[:uuid])
-      json JSON.parse(tweets)
+      puts tweets
+      #json JSON.parse(tweets)
+      json tweets
     end
   end
 end

@@ -13,8 +13,10 @@ defmodule FetchItWorkers.TwitterWorker do
 
   def handle_call({:search, search_string, number_of_tweets}, _from, state) do
     response = ExTwitter.search(search_string, [count: number_of_tweets])
-    |> Stream.map(&map_tweet/1)
+    |> Enum.map(&map_tweet/1)
     |> Enum.map(&json_encode/1)
+
+    response |> inspect |> IO.puts
 
     {:reply, response, state}
   end
