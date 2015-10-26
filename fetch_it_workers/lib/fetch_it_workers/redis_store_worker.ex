@@ -5,10 +5,12 @@ defmodule FetchItWorkers.RedisStoreWorker do
     GenServer.start_link(__MODULE__, [], name: :redis_store)
   end
 
+  # sync call
   def store!(pid, uuid, message) do
     GenServer.call(pid, {:store, uuid, message})
   end
 
+  # async call
   def store(pid, uuid, message) do
     GenServer.cast(pid, {:store, uuid, message})
   end

@@ -16,6 +16,7 @@ defmodule FetchItWorkers.TwitterWorker do
     |> Enum.map(&map_tweet/1)
     |> Enum.map(&json_encode/1)
 
+    # TODO: remove dbg code
     response |> inspect |> IO.puts
 
     {:reply, response, state}
