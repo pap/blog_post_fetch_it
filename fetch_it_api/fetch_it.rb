@@ -1,4 +1,6 @@
-require "sinatra"
+require 'sinatra'
+require 'sidekiq'
+require 'rinterface'
 
 require_relative 'config'
 
@@ -10,6 +12,23 @@ class Request
       "number_of_tweets" => params["number"],
       "requested_at" => Time.now
     }
+  end
+end
+
+class TwitterWorker
+  include Sidekiq::Worker
+
+  def self.perform_async(*payload)
+      queue = "queue:twitter_elixir"
+      json = {
+        queue: queue,
+        class: "TwitterWorker",
+        args: payload,
+        jid: SecureRandom.hex(12),
+        enqueued_at: Time.now.to_f
+      }.to_json
+      client = Sidekiq.redis { |conn| conn }
+      client.lpush(queue, json)
   end
 end
 
@@ -31,7 +50,7 @@ namespace "/api" do
     post "/background_job/twitter" do
       params = JSON.parse(request.body.read)
       data = Request.new.data(params)
-      # TODO: add sidekiq ...
+      TwitterWorker.perform_async(data)
       json data
     end
 
