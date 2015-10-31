@@ -30,6 +30,11 @@ class TwitterWorker
       client = Sidekiq.redis { |conn| conn }
       client.lpush(queue, json)
   end
+
+  # it will get the results processed by elixir
+  def perform(*payload)
+  end
+
 end
 
 get "/" do
