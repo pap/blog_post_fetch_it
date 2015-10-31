@@ -5,9 +5,8 @@ defmodule FetchItWorkers do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(FetchItWorkers.RedisPubSubWorker, []),
-      worker(FetchItWorkers.RedisStoreWorker, []),
-      worker(FetchItWorkers.TwitterWorker, [])
+      worker(FetchItWorkers.RedisPubSub, []),
+      worker(FetchItWorkers.TwitterClient, [])
     ]
 
     opts = [strategy: :one_for_one, name: FetchItWorkers.Supervisor]

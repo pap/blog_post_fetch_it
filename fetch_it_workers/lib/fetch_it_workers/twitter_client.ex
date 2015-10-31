@@ -1,4 +1,4 @@
-defmodule FetchItWorkers.TwitterWorker do
+defmodule FetchItWorkers.TwitterClient do
   use GenServer
 
   @number_of_tweets 20

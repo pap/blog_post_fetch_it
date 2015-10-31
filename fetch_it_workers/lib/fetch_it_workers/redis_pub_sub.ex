@@ -1,4 +1,4 @@
-defmodule FetchItWorkers.RedisPubSubWorker do
+defmodule FetchItWorkers.RedisPubSub do
   use GenServer
 
   @redis_sub_channel "workers"
@@ -35,8 +35,9 @@ defmodule FetchItWorkers.RedisPubSubWorker do
     """
 
     # TODO: import funs to make these calls "smaller"
-    tweets = FetchItWorkers.TwitterWorker.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
-    FetchItWorkers.RedisStoreWorker.store!(:redis_store, decoded["uuid"], tweets)
+    tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
+    #
+    FetchItWorkers.RedisStore.store!(:redis_store, decoded["uuid"], tweets)
 
     {:noreply, state}
   end
