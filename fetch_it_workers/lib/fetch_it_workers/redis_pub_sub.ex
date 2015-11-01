@@ -36,9 +36,8 @@ defmodule FetchItWorkers.RedisPubSub do
 
     # TODO: import funs to make these calls "smaller"
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
-    #
-    FetchItWorkers.RedisStore.store!(:redis_store, decoded["uuid"], tweets)
-
+    # TODO: store on file with uuid as file name
+    # (...)
     {:noreply, state}
   end
 end

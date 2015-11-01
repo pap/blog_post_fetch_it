@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sidekiq'
-require 'rinterface'
+require 'bertrpc'
+require 'bert'
 
 require_relative 'config'
 
@@ -59,14 +60,19 @@ namespace "/api" do
       json data
     end
 
-    post "/rpcerlang/twitter" do
-      # TODO: use rpcerlang
+    post "/rpc/twitter" do
       params = JSON.parse(request.body.read)
-      data = Request.new.data(params)
 
-      # TODO: rpc call
-      # wait for the response
-      json data
+      search_string = params["search"]
+      number_of_tweets = params["number"]
+
+      service = BERTRPC::Service.new('localhost', 10001)
+      #:'Elixir.FetchItWorkers.RPC'
+      #request = service.call.twitter_rpc.fetch_tweets(data)
+      request = service.call.send(:'Elixir.FetchItWorkers.RPC').fetch_tweets([search_string, number_of_tweets])
+
+      p request.inspect
+      json BERT.decode(request)
     end
 
     get "/twitter/:uuid" do
