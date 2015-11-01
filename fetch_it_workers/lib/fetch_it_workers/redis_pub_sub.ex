@@ -9,8 +9,7 @@ defmodule FetchItWorkers.RedisPubSub do
 
   def init(_args) do
     # returning a quick timeout will allow the subscribe to happen on
-    # handle_info(:timeout, state)
-    {:ok, %{pub_sub_con: nil}, 50}
+    {:ok, %{pub_sub_con: nil}, 10}
   end
 
   def handle_info(:timeout, _state) do
@@ -28,11 +27,6 @@ defmodule FetchItWorkers.RedisPubSub do
 
   def handle_info({:redix_pubsub, :message, message, _channel}, state) do
     {:ok, decoded} = Poison.decode(message)
-
-    IO.puts """
-      Received on channel #{_channel}:
-        #{message}
-    """
 
     # TODO: import funs to make these calls "smaller"
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])

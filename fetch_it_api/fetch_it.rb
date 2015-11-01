@@ -5,6 +5,7 @@ require 'msgpack'
 
 require_relative 'config'
 
+# TODO: remove to their own files
 class Request
   def data(params)
     {
@@ -62,25 +63,21 @@ namespace "/api" do
 
     post "/rpc/twitter" do
       params = JSON.parse(request.body.read)
-
       search_string = params["search"]
       number_of_tweets = params["number"]
 
       service = BERTRPC::Service.new('localhost', 10001)
       #:'Elixir.FetchItWorkers.RPC'
       response = service.call.send(:'Elixir.FetchItWorkers.RPC').fetch_tweets([search_string, number_of_tweets])
-
       tweets = MessagePack.unpack(response)
-      json tweets.map {|t| JSON.parse(t)}
+
+      json tweets.map { |t| JSON.parse(t) }
     end
 
     get "/twitter/:uuid" do
-      # No redis save .. use sqlite and a webhook to receive from the worker
-      tweets = $redis.get(params[:uuid])
-      # TODO: cleanup
-      puts tweets
-      #json JSON.parse(tweets)
-      json tweets
+      # TODO: read from file. The tweets from pubsub and background_job are stored in a file <uuid>.json
+      # JSON.parse(tweets)
+      # json tweets
     end
   end
 end

@@ -5,12 +5,11 @@ defmodule FetchItWorkers do
     import Supervisor.Spec, warn: false
 
     # start aberth server
+    # RPC requests
     number_acceptors = 100
     port = 10001
     handlers = [FetchItWorkers.RPC]
     {:ok, _pid} = :aberth.start_server(number_acceptors, port, handlers)
-
-
 
     children = [
       worker(FetchItWorkers.RedisPubSub, []),

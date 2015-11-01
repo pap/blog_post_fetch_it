@@ -1,13 +1,12 @@
 use Mix.Config
 
-# This configuration file is excluded from version control
+import_config "secrets.exs"
+# secrets.exs is excluded from version control
 # It contains the Twitter credentials ...
 
-import_config "secrets.exs"
-
 #  config :extwitter, :oauth, [
-#    consumer_key: "",
-#    consumer_secret: "",
-#    access_token: "",
-#    access_token_secret: ""
+#    consumer_key: "INSERT YOURS",
+#    consumer_secret: "INSERT YOURS",
+#    access_token: "INSERT YOURS",
+#    access_token_secret: "INSERT YOURS"
 #  ]
