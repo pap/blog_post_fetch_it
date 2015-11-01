@@ -25,7 +25,7 @@ defmodule FetchItWorkers.Mixfile do
       {:poison, "~> 1.5"},
       {:redix, "~> 0.2.0"},
       {:aberth, github: "a13x/aberth"},
-      {:bertex, "~> 1.2.0"}
+      {:message_pack, "~> 0.2.0"}
     ]
   end
 end

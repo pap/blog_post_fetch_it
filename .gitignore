@@ -1,2 +1,3 @@
 secrets*
 .ruby-*
+fetch_it_workers/log

@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sidekiq'
 require 'bertrpc'
-require 'bert'
+require 'msgpack'
 
 require_relative 'config'
 
@@ -68,11 +68,10 @@ namespace "/api" do
 
       service = BERTRPC::Service.new('localhost', 10001)
       #:'Elixir.FetchItWorkers.RPC'
-      #request = service.call.twitter_rpc.fetch_tweets(data)
-      request = service.call.send(:'Elixir.FetchItWorkers.RPC').fetch_tweets([search_string, number_of_tweets])
+      response = service.call.send(:'Elixir.FetchItWorkers.RPC').fetch_tweets([search_string, number_of_tweets])
 
-      p request.inspect
-      json BERT.decode(request)
+      tweets = MessagePack.unpack(response)
+      json tweets.map {|t| JSON.parse(t)}
     end
 
     get "/twitter/:uuid" do
