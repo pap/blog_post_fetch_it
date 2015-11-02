@@ -75,9 +75,15 @@ namespace "/api" do
     end
 
     get "/twitter/:uuid" do
-      # TODO: read from file. The tweets from pubsub and background_job are stored in a file <uuid>.json
-      # JSON.parse(tweets)
-      # json tweets
+      tweets = []
+      file = File.new("../tweet_store/#{params[:uuid]}", "r")
+
+      file.each_line do |line|
+        tweets << line
+      end
+      file.close
+
+      json tweets.map { |t| JSON.parse(t) }
     end
   end
 end

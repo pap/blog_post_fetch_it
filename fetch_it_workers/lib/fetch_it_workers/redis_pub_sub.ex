@@ -22,16 +22,22 @@ defmodule FetchItWorkers.RedisPubSub do
 
   def handle_info({:redix_pubsub, :subscribe, channel, _}, state) do
     IO.puts "Worker subscribed to #{channel} channel ..."
+
     {:noreply, state}
   end
 
   def handle_info({:redix_pubsub, :message, message, _channel}, state) do
     {:ok, decoded} = Poison.decode(message)
 
-    # TODO: import funs to make these calls "smaller"
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
-    # TODO: store on file with uuid as file name
-    # (...)
+    store_tweets(decoded["uuid"], tweets)
+
     {:noreply, state}
+  end
+
+  defp store_tweets(uuid, tweets) do
+    {:ok, file} = File.open("../tweet_store/#{uuid}", [:write, :utf8])
+    IO.write(file, Enum.map(tweets, &("#{&1}\n")))
+    File.close(file)
   end
 end

@@ -1,3 +1,4 @@
 secrets*
 .ruby-*
 fetch_it_workers/log
+tweet_store/
