@@ -30,14 +30,8 @@ defmodule FetchItWorkers.RedisPubSub do
     {:ok, decoded} = Poison.decode(message)
 
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
-    store_tweets(decoded["uuid"], tweets)
+    FetchItWorkers.Filestore.store_tweets(decoded["uuid"], tweets)
 
     {:noreply, state}
-  end
-
-  defp store_tweets(uuid, tweets) do
-    {:ok, file} = File.open("../tweet_store/#{uuid}", [:write, :utf8])
-    IO.write(file, Enum.map(tweets, &("#{&1}\n")))
-    File.close(file)
   end
 end

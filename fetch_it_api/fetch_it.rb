@@ -21,7 +21,7 @@ class TwitterWorker
   include Sidekiq::Worker
 
   def self.perform_async(*payload)
-      queue = "queue:twitter_elixir"
+      queue = "queue:elixir"
       json = {
         queue: queue,
         class: "TwitterWorker",

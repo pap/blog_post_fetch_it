@@ -11,9 +11,14 @@ defmodule FetchItWorkers do
     handlers = [FetchItWorkers.RPC]
     {:ok, _pid} = :aberth.start_server(number_acceptors, port, handlers)
 
+    # Redis client init
+    {:ok, redis_client} = Redix.start_link
+
     children = [
       worker(FetchItWorkers.RedisPubSub, []),
-      worker(FetchItWorkers.TwitterClient, [])
+      worker(FetchItWorkers.TwitterClient, []),
+      worker(FetchItWorkers.RedisPoller, [redis_client]),
+      supervisor(FetchItWorkers.SidekiqSupervisor, [redis_client])
     ]
 
     opts = [strategy: :one_for_one, name: FetchItWorkers.Supervisor]
