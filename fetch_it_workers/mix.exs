@@ -14,7 +14,7 @@ defmodule FetchItWorkers.Mixfile do
 
   def application do
     [
-      applications: [:logger, :extwitter],
+      applications: [:logger, :extwitter, :aberth],
       mod: {FetchItWorkers, []}]
   end
 
@@ -23,7 +23,10 @@ defmodule FetchItWorkers.Mixfile do
       {:oauth, github: "tim/erlang-oauth"},
       {:extwitter, "~> 0.5.1"},
       {:poison, "~> 1.5"},
-      {:redix, "~> 0.2.0"}
+      {:poolboy, "~> 1.5.1", override: true},
+      {:redix, "~> 0.2.0"},
+      {:aberth, github: "a13x/aberth"},
+      {:message_pack, "~> 0.2.0"}
     ]
   end
 end
