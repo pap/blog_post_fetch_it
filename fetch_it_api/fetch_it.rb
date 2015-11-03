@@ -1,46 +1,22 @@
 require 'sinatra'
 require 'sidekiq'
+require 'sidekiq/api'
 require 'bertrpc'
 require 'msgpack'
+require 'tilt/erb'
 
 require_relative 'config'
 
-# TODO: remove to their own files
-class Request
-  def data(params)
-    {
-      "uuid" => SecureRandom.uuid,
-      "search_string" => params["search"],
-      "number_of_tweets" => params["number"],
-      "requested_at" => Time.now
-    }
-  end
-end
-
-class TwitterWorker
-  include Sidekiq::Worker
-
-  def self.perform_async(*payload)
-      queue = "queue:elixir"
-      json = {
-        queue: queue,
-        class: "TwitterWorker",
-        args: payload,
-        jid: SecureRandom.hex(12),
-        enqueued_at: Time.now.to_f
-      }.to_json
-      client = Sidekiq.redis { |conn| conn }
-      client.lpush(queue, json)
-  end
-
-  # it will get the results processed by elixir
-  def perform(*payload)
-  end
-
-end
-
 get "/" do
   "FetchIt! API"
+end
+
+get '/sidekiq' do
+  stats = Sidekiq::Stats.new
+  @failed = stats.failed
+  @processed = stats.processed
+  @messages = $redis.lrange('queue:default', 0, -1)
+  erb :index
 end
 
 namespace "/api" do
@@ -74,7 +50,7 @@ namespace "/api" do
       json tweets.map { |t| JSON.parse(t) }
     end
 
-    get "/twitter/:uuid" do
+    get "/tweets/:uuid" do
       tweets = []
       file = File.new("../tweet_store/#{params[:uuid]}", "r")
 
@@ -87,3 +63,26 @@ namespace "/api" do
     end
   end
 end
+
+__END__
+
+@@ layout
+<html>
+<head>
+<title>FetchIt!</title>
+<body>
+<%= yield %>
+</body>
+</html>
+
+@@ index
+<h1>Sidekiq Status</h1>
+<h2>Failed: <%= @failed %></h2>
+<h2>Processed: <%= @processed %></h2>
+
+<a href="/sidekiq">Refresh page</a>
+
+<h3>Messages</h3>
+<% @messages.each do |msg| %>
+<p><%= msg %></p>
+<% end %>

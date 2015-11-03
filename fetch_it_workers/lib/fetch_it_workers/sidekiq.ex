@@ -31,7 +31,7 @@ defmodule FetchItWorkers.Sidekiq do
       queue: queue,
       jid: jid,
       class: class,
-      args: [jid, args["uuid"]],
+      args: [jid, args["uuid"], args["search_string"], args["number_of_tweets"]],
       enqueued_at: enqueued_at
     } |> Poison.Encoder.encode([])
 
