@@ -6,11 +6,6 @@ defmodule FetchItWorkers.Sidekiq do
     GenServer.start_link(__MODULE__, [], [])
   end
 
-  # TODO: this may be removed
-  def init(_args) do
-    {:ok, %{}}
-  end
-
   def run(pid, job, redis_client) do
     GenServer.call(pid, {:run, job, redis_client})
   end

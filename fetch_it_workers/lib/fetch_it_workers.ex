@@ -14,7 +14,6 @@ defmodule FetchItWorkers do
     # Redis client init
     {:ok, redis_client} = Redix.start_link
 
-    # TODO: add poolboy "controled" TwitterClient
     children = [
       worker(FetchItWorkers.RedisPubSub, []),
       worker(FetchItWorkers.TwitterClient, []),
