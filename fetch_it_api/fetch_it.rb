@@ -44,7 +44,7 @@ namespace "/api" do
       json tweets.map { |t| JSON.parse(t) }
     end
 
-    get "/tweets/:uuid" do
+    get "/twitter/:uuid" do
       tweets = []
       file = File.new("../tweet_store/#{params[:uuid]}", "r")
 
