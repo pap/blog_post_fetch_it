@@ -1,20 +1,21 @@
 defmodule FetchItWorkers.Sidekiq do
   use GenServer
 
-  def start_link(redis_client) do
+  def start_link(_args) do
     :random.seed(:os.timestamp)
-    GenServer.start_link(__MODULE__, [redis_client], [])
+    GenServer.start_link(__MODULE__, [], [])
   end
 
-  def init([redis_client]) do
-    {:ok, redis_client}
+  # TODO: this may be removed
+  def init(_args) do
+    {:ok, %{}}
   end
 
-  def run(pid, job) do
-    GenServer.cast(pid, {:run, job})
+  def run(pid, job, redis_client) do
+    GenServer.call(pid, {:run, job, redis_client})
   end
 
-  def handle_cast({:run, job}, redis_client) do
+  def handle_call({:run, job, redis_client}, _from, state) do
 
     {:ok, job} = Poison.decode(job)
     jid = job["jid"]
@@ -38,6 +39,6 @@ defmodule FetchItWorkers.Sidekiq do
 
     Redix.command(redis_client, ~w(LPUSH #{queue} #{new_job}))
 
-    {:noreply, redis_client}
+    {:reply, :ok, state}
   end
 end

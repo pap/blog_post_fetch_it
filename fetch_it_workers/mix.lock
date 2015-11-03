@@ -11,7 +11,7 @@
   "message_pack": {:hex, :message_pack, "0.2.0"},
   "oauth": {:git, "https://github.com/tim/erlang-oauth.git", "cd31addc828179983564fd57738f1680a4a4d1ff", []},
   "poison": {:hex, :poison, "1.5.0"},
-  "poolboy": {:git, "git://github.com/devinus/poolboy.git", "3bb48a893ff5598f7c73731ac17545206d259fac", [tag: "1.5.1"]},
+  "poolboy": {:hex, :poolboy, "1.5.1"},
   "redix": {:hex, :redix, "0.2.0"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
   "timex": {:hex, :timex, "0.19.5"},

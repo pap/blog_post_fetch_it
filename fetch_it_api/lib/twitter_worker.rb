@@ -16,7 +16,7 @@ class TwitterWorker
 
   # it will get the results processed by elixir
   def perform(*payload)
-    puts "DO SOMETHING IN RUBY ?"
+    puts "\tDO SOMETHING IN RUBY ?"
     puts "\t>>>> Received: #{payload}"
   end
 end

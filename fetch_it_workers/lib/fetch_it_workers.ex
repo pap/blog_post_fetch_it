@@ -14,11 +14,19 @@ defmodule FetchItWorkers do
     # Redis client init
     {:ok, redis_client} = Redix.start_link
 
+    sidekiq_pool_opts = [
+      name: {:local, :sidekiq_pool},
+      worker_module: FetchItWorkers.Sidekiq,
+      size: 5,
+      max_overflow: 10
+    ]
+    #Application.get_env(:poolboy, :pools, :sidekiq)
+
     children = [
       worker(FetchItWorkers.RedisPubSub, []),
       worker(FetchItWorkers.TwitterClient, []),
       worker(FetchItWorkers.RedisPoller, [redis_client]),
-      supervisor(FetchItWorkers.SidekiqSupervisor, [redis_client])
+      :poolboy.child_spec(:sidekiq_pool, sidekiq_pool_opts, [])
     ]
 
     opts = [strategy: :one_for_one, name: FetchItWorkers.Supervisor]
