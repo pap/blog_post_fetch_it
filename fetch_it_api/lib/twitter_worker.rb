@@ -16,6 +16,6 @@ class TwitterWorker
 
   # it will get the results processed by elixir
   def perform(*payload)
-    puts "Received: #{payload}"
+    puts "\t>>>> Received: #{payload}"
   end
 end
