@@ -10,7 +10,6 @@ get '/sidekiq' do
   stats = Sidekiq::Stats.new
   @failed = stats.failed
   @processed = stats.processed
-  @messages = $redis.lrange('queue:default', 0, -1)
   erb :index
 end
 
@@ -25,7 +24,7 @@ namespace "/api" do
       json data
     end
 
-    post "/background_job/twitter" do
+    post "/sidekiq/twitter" do
       params = JSON.parse(request.body.read)
       data = Request.new.data(params)
       TwitterWorker.perform_async(data)
@@ -77,7 +76,3 @@ __END__
 
 <a href="/sidekiq">Refresh page</a>
 
-<h3>Messages</h3>
-<% @messages.each do |msg| %>
-<p><%= msg %></p>
-<% end %>

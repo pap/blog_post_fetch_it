@@ -1,4 +1,5 @@
 defmodule FetchItWorkers.RPC do
+
   def fetch_tweets(message) when is_list message do
     IO.puts "Handling RPC Request ..."
 
