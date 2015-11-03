@@ -1,5 +1,7 @@
 defmodule FetchItWorkers.RPC do
   def fetch_tweets(message) when is_list message do
+    IO.puts "Handling RPC Request ..."
+
     [search_string, number_of_tweets] = message
 
     FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, search_string, number_of_tweets)

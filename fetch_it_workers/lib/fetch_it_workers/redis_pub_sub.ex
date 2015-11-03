@@ -24,7 +24,10 @@ defmodule FetchItWorkers.RedisPubSub do
   end
 
   def handle_info({:redix_pubsub, :message, message, _channel}, state) do
+
     {:ok, decoded} = Poison.decode(message)
+
+    IO.puts "Handling PubSub Job (#{decoded["uuid"]})"
 
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, decoded["search_string"], decoded["number_of_tweets"])
     FetchItWorkers.Filestore.store_tweets(decoded["uuid"], tweets)

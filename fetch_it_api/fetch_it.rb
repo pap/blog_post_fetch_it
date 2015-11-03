@@ -1,9 +1,4 @@
 require 'sinatra'
-require 'sidekiq'
-require 'sidekiq/api'
-require 'bertrpc'
-require 'msgpack'
-require 'tilt/erb'
 
 require_relative 'config'
 

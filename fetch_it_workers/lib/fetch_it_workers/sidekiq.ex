@@ -23,7 +23,8 @@ defmodule FetchItWorkers.Sidekiq do
     class = "TwitterWorker"
     enqueued_at = job["enqueued_at"]
 
-    IO.puts "Handling job: #{jid}"
+    IO.puts "Handling Sidekiq Job (#{jid})"
+
     tweets = FetchItWorkers.TwitterClient.fetch_tweets(:twitter_worker, args["search_string"], args["number_of_tweets"])
     FetchItWorkers.Filestore.store_tweets(args["uuid"], tweets)
 
